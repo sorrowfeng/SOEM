@@ -2,12 +2,15 @@
 # license. See the file LICENSE.md distributed with this software for
 # full license information.
 
-cmake_minimum_required(VERSION 3.28)
+# 3.5 is actually available almost everywhere.
+# 3.30 as the upper policy limit avoids CMake deprecation warnings.
+cmake_minimum_required(VERSION 3.5...3.30)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 project(SOEM VERSION 2.0.0 LANGUAGES C)
 
 # Debug enable
 option(EC_DEBUG "Enable debug output")
+option(EC_INSTALL "Enable soem install script")
 
 # Configurable sizes
 set(EC_BUFSIZE EC_MAXECATFRAME CACHE STRING "standard frame buffer size in bytes")
@@ -98,6 +101,7 @@ target_include_directories(soem PUBLIC
 
 target_compile_definitions(soem PRIVATE
   $<$<BOOL:${EC_DEBUG}>:EC_DEBUG>
+  $<$<BOOL:${EC_INSTALL}>:EC_INSTALL>
   $<$<STREQUAL:${CMAKE_C_BYTE_ORDER},BIG_ENDIAN>:EC_BIG_ENDIAN>
 )
 
@@ -119,49 +123,51 @@ configure_file(
   ${SOEM_BINARY_DIR}/include/soem/ec_options.h
 )
 
-install(
-  TARGETS soem
-  EXPORT soemConfig
-  DESTINATION lib
-)
-
-install(
-  EXPORT soemConfig
-  DESTINATION cmake
-)
-
-install(FILES
-  include/soem/ec_base.h
-  include/soem/ec_coe.h
-  include/soem/ec_config.h
-  include/soem/ec_dc.h
-  include/soem/ec_eoe.h
-  include/soem/ec_foe.h
-  include/soem/ec_main.h
-  include/soem/ec_print.h
-  include/soem/ec_soe.h
-  include/soem/ec_type.h
-  include/soem/soem.h
-  osal/osal.h
-  ${SOEM_BINARY_DIR}/include/soem/ec_options.h
-  DESTINATION include/soem
-)
-
-install(FILES
-  scripts/eniconv.py
-  DESTINATION scripts
-)
-
-install(FILES
-  cmake/AddENI.cmake
-  DESTINATION cmake
-)
-
-install(FILES
-  README.md
-  LICENSE.md
-  DESTINATION .
-)
+if(EC_INSTALL)
+  install(
+    TARGETS soem
+    EXPORT soemConfig
+    DESTINATION lib
+  )
+  
+  install(
+    EXPORT soemConfig
+    DESTINATION cmake
+  )
+  
+  install(FILES
+    include/soem/ec_base.h
+    include/soem/ec_coe.h
+    include/soem/ec_config.h
+    include/soem/ec_dc.h
+    include/soem/ec_eoe.h
+    include/soem/ec_foe.h
+    include/soem/ec_main.h
+    include/soem/ec_print.h
+    include/soem/ec_soe.h
+    include/soem/ec_type.h
+    include/soem/soem.h
+    osal/osal.h
+    ${SOEM_BINARY_DIR}/include/soem/ec_options.h
+    DESTINATION include/soem
+  )
+  
+  install(FILES
+    scripts/eniconv.py
+    DESTINATION scripts
+  )
+  
+  install(FILES
+    cmake/AddENI.cmake
+    DESTINATION cmake
+  )
+  
+  install(FILES
+    README.md
+    LICENSE.md
+    DESTINATION .
+  )
+endif()
 
 if(SOEM_BUILD_SAMPLES)
   add_subdirectory(samples/ec_sample)

@@ -36,8 +36,10 @@ endforeach()
 
 target_link_libraries(soem PUBLIC pthread rt)
 
-install(FILES
-  osal/linux/osal_defs.h
-  oshw/linux/nicdrv.h
-  DESTINATION include/soem
-)
+if(EC_INSTALL)
+  install(FILES
+    osal/linux/osal_defs.h
+    oshw/linux/nicdrv.h
+    DESTINATION include/soem
+  )
+endif()

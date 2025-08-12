@@ -68,8 +68,10 @@ target_link_libraries(soem PUBLIC
   winmm.lib
 )
 
-install(FILES
-  osal/win32/osal_defs.h
-  oshw/win32/nicdrv.h
-  DESTINATION include/soem
-)
+if(EC_INSTALL)
+  install(FILES
+    osal/win32/osal_defs.h
+    oshw/win32/nicdrv.h
+    DESTINATION include/soem
+  )
+endif()

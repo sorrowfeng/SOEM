@@ -43,10 +43,12 @@ foreach(target IN ITEMS
   endif()
 endforeach()
 
-install(FILES
-  osal/rtk/osal_defs.h
-  oshw/rtk/nicdrv.h
-  DESTINATION include/soem
-)
+if(EC_INSTALL)
+  install(FILES
+    osal/rtk/osal_defs.h
+    oshw/rtk/nicdrv.h
+    DESTINATION include/soem
+  )
+endif()
 
 target_link_libraries(soem PUBLIC kern ${BSP})
