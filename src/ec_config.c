@@ -1162,7 +1162,6 @@ static int ecx_main_config_map_group(ecx_contextt *context, void *pIOmap, uint8 
             /* create input mapping */
             if (context->slavelist[slave].Ibits)
             {
-
                ecx_config_create_input_mappings(context, pIOmap, group, slave, &LogAddr, &BitPos);
 
                if (context->packedMode == FALSE)
@@ -1341,7 +1340,6 @@ static int ecx_config_overlap_map_group(ecx_contextt *context, void *pIOmap, uin
             /* create output mapping */
             if (context->slavelist[slave].Obits)
             {
-
                ecx_config_create_output_mappings(context, pIOmap, group,
                                                  slave, &soLogAddr, &BitPos);
                if (BitPos)
