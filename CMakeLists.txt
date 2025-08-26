@@ -189,7 +189,8 @@ endif()
 # Platform configuration
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${CMAKE_SYSTEM_NAME}.cmake)
 
-include (InstallRequiredSystemLibraries)
+#include (InstallRequiredSystemLibraries)
+
 set (CPACK_RESOURCE_FILE_LICENSE "${SOEM_SOURCE_DIR}/LICENSE.md")
 set (CPACK_PACKAGE_CONTACT info.soem@rt-labs.com)
 set (CPACK_PACKAGE_NAME soem)
