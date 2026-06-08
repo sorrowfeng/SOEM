@@ -88,6 +88,9 @@ add_library(soem
   src/ec_soe.c
 )
 
+# 静态库需要 -fPIC 才能被链接进共享库（如 libLHandProLib_LV.so）
+set_target_properties(soem PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
 target_include_directories(soem PUBLIC
   $<BUILD_INTERFACE:${SOEM_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${SOEM_BINARY_DIR}/include>
